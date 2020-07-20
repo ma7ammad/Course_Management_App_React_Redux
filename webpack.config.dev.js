@@ -36,7 +36,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/, // handle all files ending .js and .jsx
         exclude: /node_modules/, //files to ignore
-        use: ["babel-loader"], // run babel on all specified files above to compile before bundling them
+        use: ["babel-loader", "eslint-loader"], // run babel on all specified files above to compile before bundling them
       },
       {
         test: /(\.css)$/,
