@@ -12,6 +12,10 @@ const Header = () => {
         Home
       </NavLink>
       {" | "}
+      <NavLink to="/courses" activeStyle={activeStyle}>
+        Courses
+      </NavLink>
+      {" | "}
       {/* pipe character is for visual separation between Home & About*/}
       <NavLink to="/about" activeStyle={activeStyle}>
         About
