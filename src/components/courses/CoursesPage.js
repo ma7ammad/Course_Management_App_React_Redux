@@ -17,9 +17,14 @@ class CoursesPage extends React.Component {
     this.setState({ course: course }); // this.state({ course }); will suffice
   };
 
+  handleSubmit = (event) => {
+    event.preventDefault(); //prevents the submit click from posting to server and reloading page
+    alert(this.state.course.title);
+  };
+
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <h2>Courses</h2>
         <h3>Add Course</h3>
         <input
