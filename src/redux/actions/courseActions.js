@@ -11,6 +11,7 @@ export function loadCourseSuccess(courses) {
   return { type: types.LOAD_COURSES_SUCCESS, courses };
 }
 
+//thunk
 export function loadCourses() {
   return function (dispatch) {
     return courseApi
