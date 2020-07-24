@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react"; //using useEffect Hook
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
@@ -7,10 +7,10 @@ import PropTypes from "prop-types";
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //component
 
-class ManageCoursesPage extends React.Component {
-  componentDidMount() {
-    const { courses, authors, loadCourses, loadAuthors } = this.props;
-
+function ManageCoursesPage(props) {
+  // function ManageCoursesPage({ courses, authors, loadCourses, loadAuthors })
+  const { courses, authors, loadCourses, loadAuthors } = props;
+  useEffect(() => {
     if (courses.length === 0) {
       loadCourses().catch((error) => {
         alert("Loading courses failed " + error);
@@ -22,16 +22,15 @@ class ManageCoursesPage extends React.Component {
         alert("Loading authors failed " + error);
       });
     }
-  }
+  }, []); //[] = componentDidMount : will run only once when mounting the component
 
-  render() {
-    return (
-      <>
-        <h2>Manage Course</h2>
-      </>
-    );
-  }
+  return (
+    <>
+      <h2>Manage Course</h2>
+    </>
+  );
 }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //PrpoTypes declaration
 
