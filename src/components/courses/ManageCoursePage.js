@@ -3,23 +3,22 @@ import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //component
 
 class ManageCoursesPage extends React.Component {
   componentDidMount() {
-    const { courses, authors, actions } = this.props;
+    const { courses, authors, loadCourses, loadAuthors } = this.props;
 
     if (courses.length === 0) {
-      actions.loadCourses().catch((error) => {
+      loadCourses().catch((error) => {
         alert("Loading courses failed " + error);
       });
     }
 
     if (authors.length === 0) {
-      this.props.actions.loadAuthors().catch((error) => {
+      loadAuthors().catch((error) => {
         alert("Loading authors failed " + error);
       });
     }
@@ -39,7 +38,8 @@ class ManageCoursesPage extends React.Component {
 ManageCoursesPage.propTypes = {
   authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired,
+  loadCourses: PropTypes.func.isRequired,
+  loadAuthors: PropTypes.func.isRequired,
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -50,19 +50,15 @@ function mapStateToProps(state) {
   return {
     //pass courses on props
     courses: state.courses,
-    auhtors: state.auhtors,
+    authors: state.authors,
   };
 }
 
-//specifying the actions we like to pass in on props
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
-      loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
-    },
-  };
-}
+//using Object Form instead of function to specify the actions we like to pass in on props
+const mapDispatchToProps = {
+  loadCourses: courseActions.loadCourses,
+  loadAuthors: authorActions.loadAuthors,
+};
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 //call to connect: connecting component to Redux
