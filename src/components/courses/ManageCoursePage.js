@@ -17,7 +17,7 @@ function ManageCoursesPage(props) {
   const { courses, authors, loadCourses, loadAuthors } = props;
   //setting State to hold the form-field-values before they are saved
   const [course, setCourse] = useState({ ...props.course }); // Course = state variable, setState = setter function for that value
-  const [errors, setErrors] = useState({ ...props.course }); // Course = state variable, setState = setter function for that value
+  const [errors, setErrors] = useState({ ...props.course });
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -33,9 +33,27 @@ function ManageCoursesPage(props) {
     }
   }, []); //[] = componentDidMount : will run only once when mounting the component
 
+  function handleChange(event) {
+    //destructuring neccessary here to avoid event getting garbage collected, so that it is now available within nested setCourse callback
+    //retaining a local reference to the event
+    const { name, value } = event.target;
+    //using the functional form of setState to safely set new state that's based on the existing state
+    setCourse((prevCourse) => ({
+      ...prevCourse,
+      //using JS computed prop syntax: allows referencing a prop via a variable
+      [name]: name === "authorId" ? parseInt(value, 10) : value,
+      //authorId is the only Int, the rest can stay as string
+    }));
+  }
+
   return (
     <>
-      <CourseForm course={course} errors={errors} authors={authors} />
+      <CourseForm
+        course={course}
+        errors={errors}
+        authors={authors}
+        onChange={handleChange}
+      />
     </>
   );
 }
