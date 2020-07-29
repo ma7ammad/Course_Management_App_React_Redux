@@ -10,11 +10,18 @@ import { newCourse } from "../../../tools/mockData";
 //component
 
 function ManageCoursesPage(props) {
-  // function ManageCoursesPage({ courses, authors, loadCourses, loadAuthors, saveCourse, ...props })
+  // function ManageCoursesPage({ courses, authors, loadCourses, loadAuthors, saveCourse, history, ...props })
   // '...props' is called a rest operator, which is diferent than the spread operator ...props.course
   // '...props' assigns any variables not destructured on the left to a variable 'props'
 
-  const { courses, authors, loadCourses, loadAuthors, saveCourse } = props;
+  const {
+    courses,
+    authors,
+    loadCourses,
+    loadAuthors,
+    saveCourse,
+    history, // any component loaded via <Route> gets history passed in via props from React Router
+  } = props;
   //setting State to hold the form-field-values before they are saved
   const [course, setCourse] = useState({ ...props.course }); // Course = state variable, setState = setter function for that value
   const [errors, setErrors] = useState({ ...props.course });
@@ -48,7 +55,9 @@ function ManageCoursesPage(props) {
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course);
+    saveCourse(course).then(() => {
+      history.push("/courses");
+    });
   }
 
   return (
@@ -74,6 +83,7 @@ ManageCoursesPage.propTypes = {
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
   saveCouse: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
