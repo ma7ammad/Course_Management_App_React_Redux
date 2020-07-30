@@ -5,21 +5,46 @@ import * as authorActions from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import CourseList from "./CourseList";
+import { Link } from "react-router-dom";
 
 class CoursesPage extends React.Component {
-  componentDidMount() {
-    this.props.actions.loadCourses().catch((error) => {
-      alert("Loading courses failed " + error);
-    });
+  // state = {
+  //   redirectToAddCoursePage: false,
+  // };
 
-    this.props.actions.loadAuthors().catch((error) => {
-      alert("Loading authors failed " + error);
-    });
+  componentDidMount() {
+    if (this.props.courses.length === 0) {
+      this.props.actions.loadCourses().catch((error) => {
+        alert("Loading courses failed " + error);
+      });
+    }
+
+    if (this.props.authors.length === 0) {
+      this.props.actions.loadAuthors().catch((error) => {
+        alert("Loading authors failed " + error);
+      });
+    }
   }
   render() {
     return (
       <>
+        {/* {this.state.redirectToAddCoursePage && <Redirect to="/course" />} */}
+
         <h2>Courses</h2>
+        <Link
+          style={{ marginBottom: 20 }}
+          className="btn btn-primary"
+          to="/course"
+        >
+          Add Course
+        </Link>
+        {/* <button
+          style={{ marginBottom: 20 }}
+          className="btn btn-primary add-course"
+          onClick={() => this.setState({ redirectToAddCoursePage: true })}
+        >
+          Add Course
+        </button> */}
         <CourseList courses={this.props.courses} />
       </>
     );
@@ -27,6 +52,7 @@ class CoursesPage extends React.Component {
 }
 
 CoursesPage.propTypes = {
+  authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
 };
@@ -46,7 +72,7 @@ function mapStateToProps(state) {
             };
           }), //be specific and request only data needed by components
 
-    auhtors: state.auhtors,
+    authors: state.authors,
   };
 }
 

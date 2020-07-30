@@ -28,6 +28,7 @@ export function loadCourses() {
 }
 
 export function saveCourse(course) {
+  //eslint-disable-next-line no-unused-vars
   return function (dispatch, getState) {
     return courseApi
       .saveCourse(course)
