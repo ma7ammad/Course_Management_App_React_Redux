@@ -26,7 +26,7 @@ const CourseForm = ({
         label="Title"
         value={course.title}
         onChange={onChange}
-        error={errors.title}
+        error={errors.title} // corresponds to newly added error in ManageCoursesPage
       />
 
       <SelectInput
@@ -39,7 +39,7 @@ const CourseForm = ({
           text: author.name,
         }))}
         onChange={onChange}
-        error={errors.author}
+        error={errors.author} // corresponds to newly added error in ManageCoursesPage
       />
 
       <TextInput
@@ -47,7 +47,7 @@ const CourseForm = ({
         label="Category"
         value={course.category}
         onChange={onChange}
-        error={errors.category}
+        error={errors.category} // corresponds to newly added error in ManageCoursesPage
       />
       {/* saving-disabled functionality was added earlier */}
       <button type="submit" disabled={saving} className="btn btn-primary">
