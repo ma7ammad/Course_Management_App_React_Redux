@@ -11,6 +11,8 @@ export default function courseReducer(state = initialState.courses, action) {
       );
     case types.LOAD_COURSES_SUCCESS:
       return action.courses; // using thunk
+    case types.DELETE_COURSE_OPTIMISTIC:
+      return state.filter((course) => course.id !== action.course.id); //filter returns a new array so state is not omitted/mutated
     default:
       return state;
   }
