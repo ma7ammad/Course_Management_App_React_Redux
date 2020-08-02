@@ -25,6 +25,7 @@ function ManageCoursePage(props) {
   //setting State to hold the form-field-values before they are saved
   const [course, setCourse] = useState({ ...props.course }); // Course = state variable, setState = setter function for that value
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false); //using local state as only this component and its child need access to this data
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -57,6 +58,7 @@ function ManageCoursePage(props) {
 
   function handleSave(event) {
     event.preventDefault();
+    setSaving(true);
     saveCourse(course).then(() => {
       history.push("/courses");
     });
@@ -72,6 +74,7 @@ function ManageCoursePage(props) {
         authors={authors}
         onChange={handleChange}
         onSave={handleSave}
+        saving={saving}
       />
     </>
   );

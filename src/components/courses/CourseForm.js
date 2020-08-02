@@ -48,7 +48,7 @@ const CourseForm = ({
         onChange={onChange}
         error={errors.category}
       />
-
+      {/* saving-disabled functionality was added earlier */}
       <button type="submit" disabled={saving} className="btn btn-primary">
         {saving ? "Saving..." : "Save"}
       </button>
